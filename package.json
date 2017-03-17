@@ -1,32 +1,29 @@
 {
-  "name": "loopback-jwt",
-  "version": "1.0.2",
-  "description": "express middleware to map Json Web tokens with Loopback users",
+  "name": "loopback-jwt-advanced",
+  "version": "1.0.0",
+  "description": "Express middleware to map Json Web tokens with Loopback users.",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/whoGloo/loopback-jwt.git"
+    "url": "git+https://github.com/angustus/loopback-jwt-advanced.git"
   },
   "keywords": [
     "loopback",
     "strongloop",
-    "whogloo",
-    "nodespeed",
     "jwt"
   ],
-  "author": "Julian Lyndon-Smith (julian@whogloo.io)",
+  "author": "Ole Reglitzki (ole.reglitzki@painpoint-solutions.net)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/whoGloo/loopback-jwt/issues"
+    "url": "https://github.com/angustus/loopback-jwt-advanced/issues"
   },
-  "homepage": "https://github.com/whoGloo/loopback-jwt#readme",
+  "homepage": "https://github.com/angustus/loopback-jwt-advanced#readme",
   "dependencies": {
-    "bluebird": "^3.3.4",
-    "debug": "^2.2.0",
-    "express-jwt": "^3.3.0",
-    "uuid": "^2.0.1"
+    "bluebird": "^3.5.0",
+    "express-jwt": "^5.1.0",
+    "lodash": "^4.17.4"
   }
 }

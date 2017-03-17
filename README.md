@@ -1,112 +1,75 @@
-# loopback-jwt
+# loopback-jwt-advanced
 
-[![NPM Version][npm-image]][npm-url]
-[![NPM Downloads][downloads-image]][downloads-url]
-[![Build Status][travis-image]][travis-url]
-[![Test Coverage][coveralls-image]][coveralls-url]
-[![Gratipay][gratipay-image]][gratipay-url]
+[![License](https://img.shields.io/npm/l/loopback-jwt-advanced.svg)](LICENSE)
+[![Version](https://img.shields.io/npm/v/loopback-jwt-advanced.svg)](https://www.npmjs.com/package/loopback-jwt-advanced)
+[![Downloads](https://img.shields.io/npm/dm/loopback-jwt-advanced.svg)](https://www.npmjs.com/package/loopback-jwt-advanced)
 
-  loopback-jwt is a node express middleware plugin to map [Json Web tokens](https://www.jwt.io) and [Loopback](https://strongloop.com/) users.
+`loopback-jwt-advanced` is a node express middleware plugin to map [Json Web tokens](https://www.jwt.io) and [Loopback](https://strongloop.com/) users.
+In addition to the original [loopback-jwt](https://github.com/whoGloo/loopback-jwt) it enabled quite some new options and even passing generic options to the underlying [express-jwt](https://github.com/auth0/express-jwt).
+
+## Example usage
+
+```sh
+export JWT_USER_PASSWORD="SOME_RANDOM_SECRET";
+```
 
 ```js
-// load loopback-jwt module
-var auth = require('loopback-jwt')(app,{
-    secretKey: '<secret>',
-    model: '<model>'
+const loopbackJWT = require("loopback-jwt-advanced");
+
+const auth = loopbackJWT(app, {
+  verify: function (req) {
+    var jwt = req.user;
+    if ("some custom verification fails") { throw new Error("Token invalid."); }
+  },
+  beforeCreate: function (userObj, req) {
+    var jwt = req.user;
+    // add custom fields to the user object within the database
+    userObj.email = jwt.email;
+    userObj.emailVerified = jwt.email_verified;
+    userObj.username = jwt.nickname;
+  }
 });
 
-// apply to a path
-app.use('/<path>',auth.authenticated,function(req,res,next) {
-    debug("has valid token",req.user);
-    next();
-});
+app.use("/<path>", auth.authenticated);
 
-// catch error
 app.use(function (err, req, res, next) {
-    if (err.name === 'UnauthorizedError') {
-        res.status(401).send('invalid token, or no token supplied');
-    } else {
-        res.status(401).send(err);
-    }
+  // beautify error for loopback.errorHandler()
+  if (err.name === "UnauthorizedError") { err = {status: 401, message: "Missing or invalid token"}; }
+  next(err);
 });
-
 ```
 
 ## Getting Started
 
-loopback-jwt is a simple middleware to map jwt with loopback. It is assumed that a jwt has been passed in the request
+loopback-jwt-advanced is a simple middleware to map jwt with loopback. It is assumed that a jwt has been passed in the request.
 
-### Install Connect
+### Installation
 
 ```sh
-$ npm install loopback-jwt --save
+npm install loopback-jwt-advanced --save
 ```
 
-### loading loopback-jwt
+### Usage
 
-`var auth = require('loopback-jwt')(app,{options});`
+`var auth = require("loopback-jwt-advanced")(app, options, jwtOptions);`
 
-`options` allows any options that are permitted to be passed to the loopback-jwt middleware
+`options` may contain the following properties:
+ * `[String] model` - default: `"User"`; loopback model used for User instances.
+ * `[String] identifier` - default: `"sub"`; jwt property to use as User identifier.
+ * `[String] key` - default: `"id"`; loopback model property to store the User identifier at.
+ * `[String] password` - default: `process.env["JWT_USER_PASSWORD"]`; pseudo-password to use for User instances within db.
+ * `[Array] unless` - default: `[]`; exceptions for the `express-jwt` paths, see [express-unless](https://github.com/jfromaniello/express-unless) for syntax.
+ * `[Function(req) throws Error] verify` - additional JWT Token verification can be performed within.
+ * `[[[userObj|void 0] Promise] Function(userObj, req)] beforeCreate` - the user object as created within db can be expanded within.
 
-
-options:
-- `secretKey` the key need to verify the jwt (required)
-- `model` the loopback model used for User maintenance (defaults to 'User')
-- `identifier` the jwt claim to identify the user (defaults to 'email')
-- `password` the default password to use when creating loopback users (defaults to uuid.v4())
-
-### Using loopback-jwt
-
-the `authenticated` method of loopback-jwt is added to any path that you wish to protect. If the client has not supplied a valid, signed jwt then an error will be raised
-
-```js
-
-// apply to a path
-app.use('/<path>',auth.authenticated,function(req,res,next) {
-    debug("has valid token",req.user);
-    next();
-});
-
-// catch error
-app.use(function (err, req, res, next) {
-    if (err.name === 'UnauthorizedError') {
-        res.status(401).send('invalid token, or no token supplied');
-    } else {
-        res.status(401).send(err);
-    }
-});
-```
-
-## Alter user data before creating a new user
-
-Register a `beforeCreate` callback in options and modify/enrich the passed in user object with profile data contained in the jwt token:
-
-```js
-var auth = require('loopback-jwt')(app,{
-    secretKey: '<secret>',
-    model: '<model>',
-    beforeCreate: function(newUser, data) {
-      newUser.name = data.name;
-    }
-});
-```
-
+`jwtOptions` is passed to [`express-jwt`](https://github.com/auth0/express-jwt), check it out for all options. 
+ * `[String|Function] secret` - required; type depends on algorithm in use
+ * `[String[]] algorithms` - default: `["RS256", "HS256"]`
 
 ## Contributors
 
- https://github.com/whoGloo/loopback-jwt/graphs/contributors
+ https://github.com/angustus/loopback-jwt-advanced/graphs/contributors
 
 ## License
 
 [MIT](LICENSE)
-
-[npm-image]: https://img.shields.io/npm/v/connect.svg
-[npm-url]: https://npmjs.org/package/connect
-[travis-image]: https://img.shields.io/travis/senchalabs/connect/master.svg
-[travis-url]: https://travis-ci.org/senchalabs/connect
-[coveralls-image]: https://img.shields.io/coveralls/senchalabs/connect/master.svg
-[coveralls-url]: https://coveralls.io/r/senchalabs/connect
-[downloads-image]: https://img.shields.io/npm/dm/connect.svg
-[downloads-url]: https://npmjs.org/package/connect
-[gratipay-image]: https://img.shields.io/gratipay/dougwilson.svg
-[gratipay-url]: https://www.gratipay.com/dougwilson/
