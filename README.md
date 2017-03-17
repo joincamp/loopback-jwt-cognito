@@ -24,9 +24,9 @@ const auth = loopbackJWT(app, {
   beforeCreate: function (userObj, req) {
     var jwt = req.user;
     // add custom fields to the user object within the database
-    userObj.email = jwt.email;
     userObj.emailVerified = jwt.email_verified;
     userObj.username = jwt.nickname;
+    userObj.remoteId = jwt.sub;
   }
 });
 
@@ -55,8 +55,8 @@ npm install loopback-jwt-advanced --save
 
 `options` may contain the following properties:
  * `[String] model` - default: `"User"`; loopback model used for User instances.
- * `[String] identifier` - default: `"sub"`; jwt property to use as User identifier.
- * `[String] key` - default: `"id"`; loopback model property to store the User identifier at.
+ * `[String] identifier` - default: `"email"`; jwt property to use as User identifier.
+ * `[String] key` - default: `"email"`; loopback model property to store the User identifier at.
  * `[String] password` - default: `process.env["JWT_USER_PASSWORD"]`; pseudo-password to use for User instances within db.
  * `[Array] unless` - default: `[]`; exceptions for the `express-jwt` paths, see [express-unless](https://github.com/jfromaniello/express-unless) for syntax.
  * `[Function(req) throws Error] verify` - additional JWT Token verification can be performed within.
