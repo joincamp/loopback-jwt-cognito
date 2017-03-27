@@ -68,7 +68,7 @@ npm install loopback-jwt-advanced --save
 
 ## Contributors
 
- https://github.com/angustus/loopback-jwt-advanced/graphs/contributors
+ https://github.com/PainPointSolutions/loopback-jwt-advanced/graphs/contributors
 
 ## License
 
