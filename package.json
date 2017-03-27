@@ -18,9 +18,9 @@
   "author": "Ole Reglitzki (ole.reglitzki@painpoint-solutions.net)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/angustus/loopback-jwt-advanced/issues"
+    "url": "https://github.com/PainPointSolutions/loopback-jwt-advanced/issues"
   },
-  "homepage": "https://github.com/angustus/loopback-jwt-advanced#readme",
+  "homepage": "https://github.com/PainPointSolutions/loopback-jwt-advanced#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
     "express-jwt": "^5.1.0",
