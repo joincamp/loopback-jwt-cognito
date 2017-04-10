@@ -1,6 +1,6 @@
 {
   "name": "loopback-jwt-advanced",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Express middleware to map Json Web tokens with Loopback users.",
   "main": "lib/index.js",
   "scripts": {
