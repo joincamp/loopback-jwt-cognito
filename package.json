@@ -15,7 +15,7 @@
     "strongloop",
     "jwt"
   ],
-  "author": "Ole Reglitzki (ole.reglitzki@painpoint-solutions.net)",
+  "author": "Ole Reglitzki <ole.reglitzki@painpoint-solutions.net> (https://github.com/angustus)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/PainPointSolutions/loopback-jwt-advanced/issues"
