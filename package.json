@@ -1,26 +1,27 @@
 {
-  "name": "loopback-jwt-advanced",
-  "version": "1.1.0",
-  "description": "Express middleware to map Json Web tokens with Loopback users.",
+  "name": "loopback-jwt-cognito",
+  "version": "1.1.1",
+  "description": "Express middleware to map AWS Cognito Json Web tokens with Loopback users.",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/angustus/loopback-jwt-advanced.git"
+    "url": "git+https://github.com/joincamp/loopback-jwt-cognito.git"
   },
   "keywords": [
     "loopback",
     "strongloop",
-    "jwt"
+    "jwt",
+    "cognito"
   ],
-  "author": "Ole Reglitzki <ole.reglitzki@painpoint-solutions.net> (https://github.com/angustus)",
+  "author": "Jonathan Camp <jonathan.camp@gmail.com> (https://github.com/joincamp)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/PainPointSolutions/loopback-jwt-advanced/issues"
+    "url": "https://github.com/joincamp/loopback-jwt-cognito/issues"
   },
-  "homepage": "https://github.com/PainPointSolutions/loopback-jwt-advanced#readme",
+  "homepage": "https://github.com/joincamp/loopback-jwt-cognito#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
     "express-jwt": "^5.1.0",
